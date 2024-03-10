@@ -12,7 +12,7 @@ public:
 	Arrow(const Position& start, const Position& end) : Line(start, end, Color()) {};
 	Arrow() : Line() {};
 	
-	void drawArrow(double maxLen = 100.0f) const;
+	void drawArrow(GLFWwindow* window, double maxLen = 100.0f) const;
 	
 private:
 

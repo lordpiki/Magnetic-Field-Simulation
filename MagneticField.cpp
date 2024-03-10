@@ -43,6 +43,7 @@ void MagneticField::calculateField()
 {
     _fieldArrows.clear();
 
+
     for (double x = _xmin; x <= _xmax; x += _step)
     {
         for (double y = _ymin; y <= _ymax; y += _step)
@@ -64,11 +65,11 @@ void MagneticField::calculateField()
     }
 }
 
-void MagneticField::drawField() const
+void MagneticField::drawField(GLFWwindow* window) const
 {
     for (const Arrow& arrow : _fieldArrows)
     {
-        arrow.drawArrow(0.9 * _step);
+        arrow.drawArrow(window, 0.9 * _step);
 
     }
 }

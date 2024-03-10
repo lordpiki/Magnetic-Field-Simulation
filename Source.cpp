@@ -13,6 +13,8 @@ using std::endl;
 
 
 #define M_PI 3.14159265358979323846
+MagneticField field(-1, -1, 1, 1, 0.1);
+
 
 double getRandomValue(double min, double max)
 {
@@ -32,8 +34,13 @@ void drawCoordinateSystem(GLFWwindow* window)
     Arrow xArrow(Position(-1, 0), Position(1, 0), Color(255, 255, 255));
     Arrow yArrow(Position(0, -1), Position(0, 1), Color(255, 255, 255));
 
-    xArrow.drawArrow();
-    yArrow.drawArrow();
+    xArrow.drawArrow(window);
+    yArrow.drawArrow(window);
+}
+
+void windowSizeCallback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
 }
 
 int main(void) {
@@ -45,7 +52,7 @@ int main(void) {
     if (!glfwInit())
         return -1;
 
-    int windowWidth = 1000, windowHeight = 750;
+    const int windowWidth = 1000, windowHeight = 750;
 
     window = glfwCreateWindow(windowWidth, windowHeight, "Particle Simulation", NULL, NULL);
 
@@ -56,12 +63,11 @@ int main(void) {
 
     glfwMakeContextCurrent(window);
 
-    MagneticField field(-1, -1, 1, 1, 0.1);
 
-    Particle p1(Position(-0.5, -0.5), Color(255, 255, 255));
-    p1.setCharge(-1);
-    Particle p2(Position(0.5, 0.5), Color(255, 255, 255));
-    p2.setCharge(1);
+    Particle p1(Position(-0.1, -0.1), Color(255, 255, 255));
+    p1.setCharge(-5);
+    Particle p2(Position(0.1, 0.1), Color(255, 255, 255));
+    p2.setCharge(5);
     Particle p3(Position(-0.5, 0.5), Color(255, 255, 255));
     p3.setCharge(0.1);
     Particle p4(Position(0, 0), Color(255, 255, 255));
@@ -70,8 +76,8 @@ int main(void) {
 
     field.addParticle(p1);
     field.addParticle(p2);
-    field.addParticle(p3);
-    field.addParticle(p4);
+    //field.addParticle(p3);
+    //field.addParticle(p4);
 
     field.calculateField();
 
@@ -79,10 +85,10 @@ int main(void) {
         
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
+  
+        field.drawField(window);
 
-        //drawCoordinateSystem(window);
-          
-        field.drawField();
+        glfwSetWindowSizeCallback(window, windowSizeCallback);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
