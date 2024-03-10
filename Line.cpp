@@ -5,7 +5,7 @@
 
 Position Line::draw(double maxLen) const
 {
-    glLineWidth(1.0f);
+    glLineWidth(0.02f);
     glColor3f(_color.getR(), _color.getG(), _color.getB()); // Set the color of the line
 
     // Calculate the length of the line

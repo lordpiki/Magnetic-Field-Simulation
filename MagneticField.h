@@ -10,7 +10,7 @@ public:
 
     void addParticle(const Particle& particle);
     void calculateField();
-    void drawField(GLFWwindow* window) const;
+    void drawField() const;
     void setWindowDimentions(int width, int height) { _windowWidth = width; _windowHeight = height; }
     void setGeneralDimentions(double xmin, double ymin, double xmax, double ymax) { _xmin = xmin; _ymin = ymin; _xmax = xmax; _ymax = ymax; }
 

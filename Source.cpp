@@ -34,8 +34,8 @@ void drawCoordinateSystem(GLFWwindow* window)
     Arrow xArrow(Position(-1, 0), Position(1, 0), Color(255, 255, 255));
     Arrow yArrow(Position(0, -1), Position(0, 1), Color(255, 255, 255));
 
-    xArrow.drawArrow(window);
-    yArrow.drawArrow(window);
+    xArrow.drawArrow();
+    yArrow.drawArrow();
 }
 
 void windowSizeCallback(GLFWwindow* window, int width, int height)
@@ -86,7 +86,7 @@ int main(void) {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
   
-        field.drawField(window);
+        field.drawField();
 
         glfwSetWindowSizeCallback(window, windowSizeCallback);
 

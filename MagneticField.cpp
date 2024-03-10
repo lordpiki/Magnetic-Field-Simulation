@@ -52,24 +52,26 @@ void MagneticField::calculateField()
             Position endPoint(x + field.getX(), y + field.getY());
 
             double distance = sqrt(field.getX() * field.getX() + field.getY() * field.getY());
-            double normalizedDistance = distance / 0.5; // Normalize the distance to the range [0, 1]
+            double normalizedDistance = distance / 0.5;
 
             // Calculate the color based on the normalized distance
             int blue = static_cast<int>(255 * (1 - normalizedDistance));
             int red = static_cast<int>(255 * normalizedDistance);
 
-            Arrow arrow(Position(x, y), endPoint, Color(red, 0, blue), 0.02f);
+
+
+            Arrow arrow(Position(x, y), endPoint, Color(red, 0, blue), normalizedDistance);
 
             _fieldArrows.push_back(arrow);
         }
     }
 }
 
-void MagneticField::drawField(GLFWwindow* window) const
+void MagneticField::drawField() const
 {
     for (const Arrow& arrow : _fieldArrows)
     {
-        arrow.drawArrow(window, 0.9 * _step);
+        arrow.drawArrow(0.9 * _step);
 
     }
 }

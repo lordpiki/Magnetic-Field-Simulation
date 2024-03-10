@@ -4,13 +4,11 @@
 
 #define M_PI 3.14159265358979323846
 
-void Arrow::drawArrow(GLFWwindow* window, double maxLen) const
+void Arrow::drawArrow(double maxLen) const
 {
     Position newEnd = draw(maxLen);
-    int windowWidth = 0, windowHeight = 0;
-    glfwGetWindowSize(window, &windowWidth, &windowHeight);
 
-    const double arrowHeadSize = 0.02;
+    const double arrowHeadSize = 0.02f;
 
     // Calculate the coordinates of the arrow head
     double arrowHeadX = newEnd.x;
