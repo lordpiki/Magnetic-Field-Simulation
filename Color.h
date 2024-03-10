@@ -6,9 +6,9 @@ public:
 	Color() : _r(255), _g(255), _b(255) {};
 	~Color() {};
 
-	float getR() const { return _r / 255.0f; }
-	float getG() const { return _g / 255.0f; }
-	float getB() const { return _b / 255.0f; }
+	double getR() const { return _r / 255.0f; }
+	double getG() const { return _g / 255.0f; }
+	double getB() const { return _b / 255.0f; }
 
 	void setR(int r) { _r = r; }
 	void setG(int g) { _g = g; }

@@ -21,12 +21,12 @@ void Particle::draw()
     // Number of segments in the circle (adjust for smoothness)
     const int numSegments = 30;
 
-    float aspectRatio = static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT);
+    double aspectRatio = static_cast<double>(WINDOW_WIDTH) / static_cast<double>(WINDOW_HEIGHT);
 
     for (int i = 0; i <= numSegments; ++i) {
-        float theta = (2.0f * M_PI * static_cast<float>(i)) / static_cast<float>(numSegments);
-        float dx = _radius * std::cos(theta);
-        float dy = _radius * std::sin(theta) * aspectRatio;  // Adjust for aspect ratio
+        double theta = (2.0f * M_PI * static_cast<double>(i)) / static_cast<double>(numSegments);
+        double dx = _radius * std::cos(theta);
+        double dy = _radius * std::sin(theta) * aspectRatio;  // Adjust for aspect ratio
         glVertex2f(_position.getX() + dx, _position.getY() + dy);
     }
 
