@@ -1,6 +1,7 @@
 #include "MagneticField.h"
 #include <cmath>
 #include <iostream>
+#include "Wire.h"
 
 using std::cout;
 using std::endl;
@@ -17,19 +18,24 @@ void MagneticField::addParticle(const Particle& particle)
     _particles.push_back(particle);
 }
 
+void MagneticField::addWire(const Wire& wire)
+{
+    _wires.push_back(wire);
+}
+
 Position MagneticField::calculateFieldAtPoint(double x, double y) const
 {
     Position field(0, 0);
 
-    for (Particle particle : _particles)
+    for (Wire wire : _wires)
     {
         // Calculate the distance between the particle and the given point
-        double dx = x - particle.getPosition().x;
-        double dy = y - particle.getPosition().y;
+        double dx = x - wire.getPosition().x;
+        double dy = y - wire.getPosition().y;
         double distance = sqrt(dx * dx + dy * dy);
 
         // Calculate the magnetic field at the given point
-        double B = M0 * particle.getcurrent() / (2 * M_PI * distance);
+        double B = M0 * wire.getcurrent() / (2 * M_PI * distance);
 
         // Calculate the angle between the particle and the given point
         double angle = atan2(dy, dx);
@@ -89,8 +95,26 @@ void MagneticField::drawField() const
         arrow.drawArrow(0.9 * _step);
     }
 
+    for (const Wire& wire : _wires)
+    {
+		wire.draw();
+	}
+
     for (const Particle& particle : _particles)
     {
 		particle.draw();
+	}
+}
+
+void MagneticField::updateField()
+{
+    for (Particle& particle : _particles)
+    {
+		Position field = calculateFieldAtPoint(particle.getPosition().x, particle.getPosition().y);
+
+		particle.setVx(field.getX() * _timeStep);
+		particle.setVy(field.getY() * _timeStep);
+        //cout << "Particle velocity: " << particle.getVx() << " " << particle.getVy() << ", Position: " << particle.getPosition().x << "," << particle.getPosition().y << endl;
+		particle.move(particle.getPosition().x + particle.getVx() * _timeStep, particle.getPosition().y + particle.getVy() * _timeStep);
 	}
 }

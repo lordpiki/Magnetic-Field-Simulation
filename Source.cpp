@@ -7,13 +7,14 @@
 #include "Arrow.h"
 #include <iostream>
 #include "MagneticField.h"
+#include "Wire.h"
 
 using std::cout;
 using std::endl;
 
 
 #define M_PI 3.14159265358979323846
-MagneticField field(-1, -1, 1, 1, 0.1);
+MagneticField field(-1, -1, 1, 1, 0.08);
 
 
 double getRandomValue(double min, double max)
@@ -65,21 +66,27 @@ int main(void) {
 
     glfwSetWindowSizeCallback(window, windowSizeCallback);
 
-
-    Particle p1(Position(-0.5, -0.8), Color(255, 255, 255));
-    p1.setCurrent(-5);
-    Particle p2(Position(0.5, 0.5), Color(255, 255, 255));
-    p2.setCurrent(5);
-    Particle p3(Position(-0.7, 0.7), Color(255, 255, 255));
-    p3.setCurrent(4);
-    Particle p4(Position(0, 0), Color(255, 255, 255));
-    p4.setCurrent(-9);
+    field.setTimeStep(0.07);
 
 
-    field.addParticle(p1);
-    field.addParticle(p2);
-    field.addParticle(p3);
-    field.addParticle(p4);
+    Wire p1(Position(-0.3, -0.3), -5);
+    Wire p2(Position(0.3, 0.3), 5);
+    Wire p3(Position(-0.7, 0.7), 4);
+    Wire p4(Position(0, 0), 9);
+
+
+    field.addWire(p1);
+    field.addWire(p2);
+    field.addWire(p3);
+    //field.addWire(p4);
+
+    Particle p1p(Position(0.9, 0.5), Color(255, 255, 255));
+    field.addParticle(p1p);
+    Particle p2p(Position(-0.9, -0.5), Color(255, 0, 255));
+    field.addParticle(p2p);
+    Particle p3p(Position(0.0, 0.05), Color(0, 255, 255));
+    field.addParticle(p3p);
+
 
     field.calculateField();
 
@@ -89,6 +96,7 @@ int main(void) {
         glClear(GL_COLOR_BUFFER_BIT);
   
         field.drawField();
+        field.updateField();
 
 
         glfwSwapBuffers(window);

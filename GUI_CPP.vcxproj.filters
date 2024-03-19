@@ -33,6 +33,9 @@
     <ClCompile Include="MagneticField.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Wire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MagneticField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wire.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

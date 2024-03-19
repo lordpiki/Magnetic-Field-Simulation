@@ -31,7 +31,6 @@ public:
 	~Particle() {};
 
 	Position& getPosition() { return _position; }
-	double getCurrent() { return _current; }
 	Color& getColor() { return _color; }
 	double& getRadius() { return _radius; }
 	double& getMass() { return _mass; }
@@ -44,11 +43,9 @@ public:
 	void setMass(double mass) { _mass = mass; }
 	void setVx(double vx) { _vx = vx; }
 	void setVy(double vy) { _vy = vy; }
-	void setCurrent(double current) { _current = current; }
 
 	void move(double x, double y) { _position.move(x, y); }
 
-	double& getcurrent() { return _current; }
 	void draw() const;
 
 protected:
@@ -56,10 +53,8 @@ protected:
 	Position _position;
 	Color _color;
 	double _mass;
-	double _current;
 	double _vx;
 	double _vy;
 
-	void drawX() const;
-	void drawO() const;
+
 };
