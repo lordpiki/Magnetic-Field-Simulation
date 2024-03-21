@@ -14,6 +14,8 @@ public:
 
     void setTimeStep(double timeStep) { _timeStep = timeStep; }
 
+    std::vector <Particle>& getParticles() { return _particles; }
+    std::vector <Wire>& getWires() { return _wires; }
 
     void calculateField();
     void drawField() const;

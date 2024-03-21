@@ -14,7 +14,7 @@ using std::endl;
 
 
 #define M_PI 3.14159265358979323846
-MagneticField field(-1, -1, 1, 1, 0.08);
+MagneticField field(-1, -1, 1, 1, 0.06);
 
 
 double getRandomValue(double min, double max)
@@ -44,6 +44,62 @@ void windowSizeCallback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+double lastX = 0.0, lastY = 0.0;
+bool dragging = false;
+
+Wire* particleBeingDragged = nullptr;
+
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    if (button == GLFW_MOUSE_BUTTON_LEFT) {
+        if (action == GLFW_PRESS) {
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+
+            // Convert xpos and ypos to be between -1 and 1
+            int windowWidth, windowHeight;
+            glfwGetWindowSize(window, &windowWidth, &windowHeight);
+            double normalizedX = (xpos / windowWidth) * 2 - 1;
+            double normalizedY = (ypos / windowHeight) * 2 - 1;
+            normalizedY = -normalizedY;
+
+
+            // Check if the mouse click is over a particle
+            for (auto& wire : field.getWires()) {
+
+                double distance = sqrt(pow(normalizedX - wire.getPosition().getX(), 2) + pow(normalizedY - wire.getPosition().getY(), 2));
+                if (distance < wire.getRadius()) {
+                    particleBeingDragged = &wire;
+                    dragging = true;
+                    break;
+                }
+            }
+        }
+        else if (action == GLFW_RELEASE) {
+            dragging = false;
+            particleBeingDragged = nullptr;
+        }
+    }
+}
+
+void cursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
+    if (dragging && particleBeingDragged) {
+        // Update particle position
+
+        int windowWidth, windowHeight;
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+        double normalizedX = (xpos / windowWidth) * 2 - 1;
+        double normalizedY = (ypos / windowHeight) * 2 - 1;
+        normalizedY = -normalizedY;
+
+        particleBeingDragged->getPosition().setX(normalizedX);
+        particleBeingDragged->getPosition().setY(normalizedY);
+        particleBeingDragged->draw();
+
+        field.calculateField();
+    }
+}
+
+
 int main(void) {
 
     srand(time(NULL));
@@ -66,11 +122,18 @@ int main(void) {
 
     glfwSetWindowSizeCallback(window, windowSizeCallback);
 
+    // Set the mouse button input callback function
+    glfwSetMouseButtonCallback(window, mouseButtonCallback);
+
+    // Set the cursor position callback function
+    glfwSetCursorPosCallback(window, cursorPosCallback);
+
+
     field.setTimeStep(0.07);
 
 
-    Wire p1(Position(-0.3, -0.3), -5);
-    Wire p2(Position(0.3, 0.3), 5);
+    Wire p1(Position(-0.1, -0.1), -10);
+    Wire p2(Position(0.1, 0.1), 10);
     Wire p3(Position(-0.7, 0.7), 4);
     Wire p4(Position(0, 0), 9);
 
@@ -85,7 +148,7 @@ int main(void) {
     Particle p2p(Position(-0.9, -0.5), Color(255, 0, 255));
     field.addParticle(p2p);
     Particle p3p(Position(0.0, 0.05), Color(0, 255, 255));
-    field.addParticle(p3p);
+    //field.addParticle(p3p);
 
 
     field.calculateField();

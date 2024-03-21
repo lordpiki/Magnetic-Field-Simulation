@@ -4,21 +4,30 @@
 class Position
 {
 public:
-	Position(double x, double y) : x(x), y(y) {};
-	Position() : x(0), y(0) {};
-	~Position() {};
+    Position(double x, double y) : x(x), y(y) {};
+    Position() : x(0), y(0) {};
+    ~Position() {};
 
-	double getX() const { return x; }
-	double getY() const { return y; }
+    double getX() const { return x; }
+    double getY() const { return y; }
 
-	void setX(double xToSet) { x = xToSet; }
-	void setY(double yToSet) { y = yToSet; }
+    void setX(double xToSet) { x = wrapAround(xToSet); }
+    void setY(double yToSet) { y = wrapAround(yToSet); }
 
-	void move(double x, double  y) { setX(x); setY(y); };
+    void move(double x, double  y) { setX(x); setY(y); };
 
-	double x;
-	double y;
+    double x;
+    double y;
 private:
+    double wrapAround(double value) const
+    {
+        if (value > 1)
+            return value - 2;
+        else if (value < -1)
+            return value + 2;
+        else
+            return value;
+    }
 };
 
 class Particle
