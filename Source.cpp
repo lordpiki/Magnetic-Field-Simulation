@@ -14,7 +14,7 @@ using std::endl;
 
 
 #define M_PI 3.14159265358979323846
-MagneticField field(-1, -1, 1, 1, 0.06);
+MagneticField field(-1, -1, 1, 1, 0.05);
 
 
 double getRandomValue(double min, double max)
@@ -132,21 +132,21 @@ int main(void) {
     field.setTimeStep(0.07);
 
 
-    Wire p1(Position(-0.1, -0.1), -10);
-    Wire p2(Position(0.1, 0.1), 10);
+    Wire p1(Position(-0.1, -0.1), 5);
+    Wire p2(Position(0.1, 0.1), 5);
     Wire p3(Position(-0.7, 0.7), 4);
-    Wire p4(Position(0, 0), 9);
+    Wire p4(Position(0, 0), 8);
 
 
     field.addWire(p1);
     field.addWire(p2);
-    field.addWire(p3);
+    //field.addWire(p3);
     //field.addWire(p4);
 
     Particle p1p(Position(0.9, 0.5), Color(255, 255, 255));
     field.addParticle(p1p);
     Particle p2p(Position(-0.9, -0.5), Color(255, 0, 255));
-    field.addParticle(p2p);
+    //field.addParticle(p2p);
     Particle p3p(Position(0.0, 0.05), Color(0, 255, 255));
     //field.addParticle(p3p);
 

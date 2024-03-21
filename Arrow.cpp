@@ -8,7 +8,7 @@ void Arrow::drawArrow(double maxLen) const
 {
     Position newEnd = draw(maxLen);
 
-    const double arrowHeadSize = 0.015f;
+    const double arrowHeadSize = 0.012f;
 
     // Calculate the coordinates of the arrow head
     double arrowHeadX = newEnd.x;
